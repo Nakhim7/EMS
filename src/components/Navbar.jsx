@@ -1,87 +1,201 @@
-import { Menu, Bell, Sun, Moon, User, LogOut } from "lucide-react";
+import {
+  Menu,
+  Bell,
+  Sun,
+  Moon,
+  User,
+  LogOut,
+  Globe,
+  ChevronDown,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function Navbar({ onMenu }) {
   const [dark, setDark] = useState(localStorage.getItem("theme") === "dark");
+  const [lang, setLang] = useState(localStorage.getItem("lang") || "en");
   const [openProfile, setOpenProfile] = useState(false);
-  const profileRef = useRef(null);
+  const [openLang, setOpenLang] = useState(false);
 
+  const profileRef = useRef(null);
+  const langRef = useRef(null);
+
+  /* ---------------- Theme ---------------- */
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
-  // Close dropdown when clicking outside
+  /* ---------------- Language ---------------- */
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (profileRef.current && !profileRef.current.contains(e.target)) {
+    localStorage.setItem("lang", lang);
+  }, [lang]);
+
+  /* ---------------- Outside click ---------------- */
+  useEffect(() => {
+    const close = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target))
         setOpenProfile(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+      if (langRef.current && !langRef.current.contains(e.target))
+        setOpenLang(false);
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
   }, []);
 
   return (
-    <header className="h-24 px-6 lg:px-10 bg-white dark:bg-neutral-950 flex items-center justify-between shadow-sm sticky top-0 z-30">
+    <header
+      className="sticky top-0 z-40 h-24 px-6 lg:px-10
+      bg-white/80 dark:bg-neutral-950/80
+      backdrop-blur-xl
+      border-b border-gray-100 dark:border-neutral-800
+      flex items-center justify-between"
+    >
       {/* LEFT */}
-      <div className="flex items-center gap-4 lg:gap-6">
+      <div className="flex items-center gap-4">
         <button
-          className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-800"
           onClick={onMenu}
+          className="lg:hidden p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-800"
         >
-          <Menu size={24} />
+          <Menu size={22} />
         </button>
+
+        <div className="hidden md:block">
+          <h2 className="font-bold text-gray-900 dark:text-white tracking-tight">
+            EMS Admin
+          </h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Energy Management System
+          </p>
+        </div>
       </div>
 
       {/* RIGHT */}
-      <div className="flex items-center gap-4 lg:gap-6">
-        {/* Theme toggle */}
+      <div className="flex items-center gap-3">
+        {/* LANGUAGE WITH FLAGS */}
+        <div className="relative" ref={langRef}>
+          <button
+            onClick={() => setOpenLang(!openLang)}
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl
+            hover:bg-gray-100 dark:hover:bg-neutral-800 transition"
+          >
+            <span className="text-lg">{lang === "en" ? "🇺🇸" : "🇰🇭"}</span>
+            <span className="text-sm font-medium hidden sm:block">
+              {lang === "en" ? "English" : "ខ្មែរ"}
+            </span>
+            <ChevronDown size={14} />
+          </button>
+
+          {openLang && (
+            <div
+              className="absolute right-0 mt-3 w-44
+              bg-white dark:bg-neutral-950
+              rounded-xl shadow-xl
+              ring-1 ring-black/5 dark:ring-white/10 overflow-hidden"
+            >
+              <button
+                onClick={() => {
+                  setLang("en");
+                  setOpenLang(false);
+                }}
+                className={`w-full flex items-center gap-3 px-4 py-3 text-sm
+                hover:bg-gray-100 dark:hover:bg-neutral-800 transition
+                ${
+                  lang === "en"
+                    ? "font-semibold bg-gray-50 dark:bg-neutral-900"
+                    : ""
+                }`}
+              >
+                🇺🇸 English
+              </button>
+
+              <button
+                onClick={() => {
+                  setLang("km");
+                  setOpenLang(false);
+                }}
+                className={`w-full flex items-center gap-3 px-4 py-3 text-sm
+                hover:bg-gray-100 dark:hover:bg-neutral-800 transition
+                ${
+                  lang === "km"
+                    ? "font-semibold bg-gray-50 dark:bg-neutral-900"
+                    : ""
+                }`}
+              >
+                🇰🇭 ខ្មែរ
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* THEME */}
         <button
           onClick={() => setDark(!dark)}
-          className="p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-800"
-          title={dark ? "Switch to light mode" : "Switch to dark mode"}
+          className="p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-800 transition"
         >
-          {dark ? <Sun size={20} /> : <Moon size={20} />}
+          {dark ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        {/* Notifications */}
-        <button className="relative p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-800">
-          <Bell size={20} />
+        {/* NOTIFICATION */}
+        <button className="relative p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-neutral-800 transition">
+          <Bell size={18} />
           <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
         </button>
 
         {/* PROFILE */}
         <div className="relative" ref={profileRef}>
-          {/* Profile circle (only circle, no name) */}
           <button
             onClick={() => setOpenProfile(!openProfile)}
-            className="w-11 h-11 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm hover:ring-2 hover:ring-emerald-400 transition"
+            className="flex items-center gap-3 pl-2 pr-4 py-2 rounded-full
+            hover:bg-gray-100 dark:hover:bg-neutral-800 transition"
           >
-            A
+            <div className="relative">
+              <div
+                className="w-11 h-11 rounded-full
+                bg-gradient-to-br from-emerald-500 to-emerald-700
+                text-white font-bold flex items-center justify-center
+                shadow ring-2 ring-white dark:ring-neutral-900"
+              >
+                A
+              </div>
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white dark:ring-neutral-900" />
+            </div>
+
+            <div className="hidden md:block text-left">
+              <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                Admin
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                System Administrator
+              </p>
+            </div>
+
+            <ChevronDown size={16} />
           </button>
 
-          {/* Dropdown */}
           {openProfile && (
-            <div className="absolute right-0 mt-3 w-56 bg-white dark:bg-neutral-950 rounded-xl shadow-lg ring-1 ring-black/5 dark:ring-white/10 overflow-hidden">
-              {/* Header */}
-              <div className="px-5 py-4 bg-gray-50 dark:bg-neutral-900">
-                <p className="text-sm font-semibold text-gray-900 dark:text-white">
+            <div
+              className="absolute right-0 mt-3 w-64
+              bg-white dark:bg-neutral-950
+              rounded-2xl shadow-xl
+              ring-1 ring-black/5 dark:ring-white/10 overflow-hidden"
+            >
+              {/* HEADER */}
+              <div className="px-6 py-4 bg-gray-50 dark:bg-neutral-900">
+                <p className="font-semibold text-gray-900 dark:text-white">
                   Admin
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  administrator
+                  administrator@ems.com
                 </p>
               </div>
 
-              {/* Actions */}
+              {/* ACTIONS */}
               <div className="py-2">
-                <button className="w-full flex items-center gap-3 px-5 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition">
+                <button className="w-full flex items-center gap-3 px-6 py-3 text-sm hover:bg-gray-100 dark:hover:bg-neutral-800 transition">
                   <User size={16} />
-                  View Profile
+                  My Profile
                 </button>
-
-                <button className="w-full flex items-center gap-3 px-5 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition">
+                <button className="w-full flex items-center gap-3 px-6 py-3 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition">
                   <LogOut size={16} />
                   Logout
                 </button>

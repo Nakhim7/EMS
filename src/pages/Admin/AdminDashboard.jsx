@@ -291,33 +291,42 @@ function PersonCard({ person, type, onClick, small }) {
     </div>
   );
 }
-
 function StatCard({ title, value, icon: Icon, trend, negative }) {
   return (
-    <div className="bg-white dark:bg-neutral-950 rounded-2xl p-6 shadow-sm">
+    <div className="group relative bg-white dark:bg-neutral-950 rounded-[24px] p-6 border border-neutral-200/60 dark:border-neutral-800/60 shadow-sm hover:shadow-xl hover:shadow-orange-500/10 hover:-translate-y-1 transition-all duration-300">
       <div className="flex justify-between items-start">
-        <div>
-          <p className="text-sm text-gray-500 uppercase">{title}</p>
-          <p className="mt-2 text-3xl font-bold">{value}</p>
+        <div className="space-y-1">
+          <p className="text-[10px] font-black text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">
+            {title}
+          </p>
+          <p className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight">
+            {value}
+          </p>
         </div>
-        <div className="p-3 rounded-xl bg-orange-50 text-orange-600">
-          <Icon size={26} />
+        <div className="p-3 rounded-2xl bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 group-hover:bg-orange-600 group-hover:text-white transition-all duration-300">
+          <Icon size={22} strokeWidth={2.5} />
         </div>
       </div>
       {trend && (
-        <div
-          className={`mt-4 flex items-center gap-2 text-sm ${
-            negative ? "text-red-600" : "text-emerald-600"
-          }`}
-        >
-          {negative ? <TrendingDown size={16} /> : <TrendingUp size={16} />}
-          {trend}
+        <div className="mt-6 flex items-center justify-between">
+          <div
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black ${
+              negative
+                ? "bg-red-50 text-red-600 dark:bg-red-500/10"
+                : "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10"
+            }`}
+          >
+            {negative ? <TrendingDown size={14} /> : <TrendingUp size={14} />}{" "}
+            {trend}
+          </div>
+          <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-tighter">
+            Growth Rate
+          </span>
         </div>
       )}
     </div>
   );
 }
-
 function Th({ children, align = "left" }) {
   return (
     <th

@@ -4,6 +4,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ManagersPage from "./pages/Admin/Manager/ManagersPage";
 import ManagerDetail from "./pages/Admin/Manager/ManagerDetail";
+import ResidentsPage from "./pages/Admin/Residents/ResidentsPage";
+import ResidentDetail from "./pages/Admin/Residents/ResidentDetail";
+import MetersPage from "./pages/Admin/Meters/MetersPage";
+import ReportsPage from "./pages/Admin/ReportsPage";
+import InvoicePage from "./pages/Admin/InvoicePage";
 
 /* Placeholder pages (create later) */
 const ManagerDashboard = () => (
@@ -21,6 +26,9 @@ export default function App() {
 
       {/* ================= Admin ================= */}
       <Route path="/admin" element={<AdminDashboard />} />
+      {/* Reports & Invoices */}
+      <Route path="/admin/reports" element={<ReportsPage />} />
+      <Route path="/admin/invoices" element={<InvoicePage />} />
       <Route path="/admin/managers" element={<ManagersPage />} />
       <Route path="/admin/managers/:id" element={<ManagerDetail />} />
 
@@ -28,7 +36,9 @@ export default function App() {
       <Route path="/manager" element={<ManagerDashboard />} />
 
       {/* ================= Resident ================= */}
-      <Route path="/resident" element={<ResidentDashboard />} />
+      <Route path="/admin/residents" element={<ResidentsPage />} />
+      <Route path="/admin/residents/:id" element={<ResidentDetail />} />
+      <Route path="/admin/meters" element={<MetersPage />} />
 
       {/* ================= 404 ================= */}
       <Route
