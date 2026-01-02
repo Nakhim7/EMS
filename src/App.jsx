@@ -8,7 +8,8 @@ import ResidentsPage from "./pages/Admin/Residents/ResidentsPage";
 import ResidentDetail from "./pages/Admin/Residents/ResidentDetail";
 import MetersPage from "./pages/Admin/Meters/MetersPage";
 import ReportsPage from "./pages/Admin/ReportsPage";
-import InvoicePage from "./pages/Admin/InvoicePage";
+import PaymentsPage from "./pages/Admin/PaymentsPage";
+import SettingsPage from "./pages/Admin/SettingsPage";
 
 /* Placeholder pages (create later) */
 const ManagerDashboard = () => (
@@ -28,7 +29,7 @@ export default function App() {
       <Route path="/admin" element={<AdminDashboard />} />
       {/* Reports & Invoices */}
       <Route path="/admin/reports" element={<ReportsPage />} />
-      <Route path="/admin/invoices" element={<InvoicePage />} />
+      <Route path="/admin/payments" element={<PaymentsPage />} />
       <Route path="/admin/managers" element={<ManagersPage />} />
       <Route path="/admin/managers/:id" element={<ManagerDetail />} />
 
@@ -39,6 +40,8 @@ export default function App() {
       <Route path="/admin/residents" element={<ResidentsPage />} />
       <Route path="/admin/residents/:id" element={<ResidentDetail />} />
       <Route path="/admin/meters" element={<MetersPage />} />
+
+      <Route path="/admin/settings" element={<SettingsPage />} />
 
       {/* ================= 404 ================= */}
       <Route

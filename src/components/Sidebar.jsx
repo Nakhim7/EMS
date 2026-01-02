@@ -61,9 +61,11 @@ export const menus = [
     active:
       "bg-purple-500/15 text-purple-700 dark:bg-purple-900/60 dark:text-purple-300 shadow-sm",
   },
+
+  // ✅ CHANGED: Invoices ➜ Payment List
   {
-    name: "Invoices",
-    path: "/admin/invoices",
+    name: "Payment List",
+    path: "/admin/payments",
     icon: FileText,
     accent: "green",
     color:
@@ -71,6 +73,7 @@ export const menus = [
     active:
       "bg-green-500/15 text-green-700 dark:bg-green-900/60 dark:text-green-300 shadow-sm",
   },
+
   {
     name: "Settings",
     path: "/admin/settings",
@@ -131,7 +134,7 @@ export default function Sidebar({ open, setOpen }) {
             <NavLink
               key={item.name}
               to={item.path}
-              end={true}
+              end
               className={({ isActive }) =>
                 `group flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-semibold transition-all duration-200
                 ${
@@ -141,7 +144,7 @@ export default function Sidebar({ open, setOpen }) {
                 }`
               }
             >
-              {/* Icon with accent background */}
+              {/* Icon */}
               <div
                 className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105
                   ${item.color}`}

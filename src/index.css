@@ -23,3 +23,16 @@ body {
 ::-webkit-scrollbar-thumb {
   @apply bg-slate-300 dark:bg-neutral-800 rounded-full;
 }
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-area {
+    display: block !important;
+  }
+}
