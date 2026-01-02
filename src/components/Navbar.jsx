@@ -1,16 +1,11 @@
-import {
-  Menu,
-  Bell,
-  Sun,
-  Moon,
-  User,
-  LogOut,
-  Globe,
-  ChevronDown,
-} from "lucide-react";
+import { Menu, Bell, Sun, Moon, User, LogOut, ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 
 export default function Navbar({ onMenu }) {
+  const { t } = useTranslation();
+
   const [dark, setDark] = useState(localStorage.getItem("theme") === "dark");
   const [lang, setLang] = useState(localStorage.getItem("lang") || "en");
   const [openProfile, setOpenProfile] = useState(false);
@@ -20,15 +15,25 @@ export default function Navbar({ onMenu }) {
   const langRef = useRef(null);
 
   /* ---------------- Theme ---------------- */
+  /* ---------------- Theme ---------------- */
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
+    // Instead of classList.toggle, we set the data-theme attribute
+    if (dark) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
   /* ---------------- Language ---------------- */
-  useEffect(() => {
-    localStorage.setItem("lang", lang);
-  }, [lang]);
+  const changeLang = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem("lang", lng);
+    setLang(lng);
+    setOpenLang(false);
+  };
 
   /* ---------------- Outside click ---------------- */
   useEffect(() => {
@@ -61,17 +66,17 @@ export default function Navbar({ onMenu }) {
 
         <div className="hidden md:block">
           <h2 className="font-bold text-gray-900 dark:text-white tracking-tight">
-            EMS Admin
+            {t("app.title")}
           </h2>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Energy Management System
+            {t("app.subtitle")}
           </p>
         </div>
       </div>
 
       {/* RIGHT */}
       <div className="flex items-center gap-3">
-        {/* LANGUAGE WITH FLAGS */}
+        {/* LANGUAGE */}
         <div className="relative" ref={langRef}>
           <button
             onClick={() => setOpenLang(!openLang)}
@@ -80,7 +85,7 @@ export default function Navbar({ onMenu }) {
           >
             <span className="text-lg">{lang === "en" ? "🇺🇸" : "🇰🇭"}</span>
             <span className="text-sm font-medium hidden sm:block">
-              {lang === "en" ? "English" : "ខ្មែរ"}
+              {lang === "en" ? t("nav.english") : t("nav.khmer")}
             </span>
             <ChevronDown size={14} />
           </button>
@@ -93,10 +98,7 @@ export default function Navbar({ onMenu }) {
               ring-1 ring-black/5 dark:ring-white/10 overflow-hidden"
             >
               <button
-                onClick={() => {
-                  setLang("en");
-                  setOpenLang(false);
-                }}
+                onClick={() => changeLang("en")}
                 className={`w-full flex items-center gap-3 px-4 py-3 text-sm
                 hover:bg-gray-100 dark:hover:bg-neutral-800 transition
                 ${
@@ -105,14 +107,11 @@ export default function Navbar({ onMenu }) {
                     : ""
                 }`}
               >
-                🇺🇸 English
+                🇺🇸 {t("nav.english")}
               </button>
 
               <button
-                onClick={() => {
-                  setLang("km");
-                  setOpenLang(false);
-                }}
+                onClick={() => changeLang("km")}
                 className={`w-full flex items-center gap-3 px-4 py-3 text-sm
                 hover:bg-gray-100 dark:hover:bg-neutral-800 transition
                 ${
@@ -121,7 +120,7 @@ export default function Navbar({ onMenu }) {
                     : ""
                 }`}
               >
-                🇰🇭 ខ្មែរ
+                🇰🇭 {t("nav.khmer")}
               </button>
             </div>
           )}
@@ -165,7 +164,7 @@ export default function Navbar({ onMenu }) {
                 Admin
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                System Administrator
+                {t("user.role")}
               </p>
             </div>
 
@@ -193,11 +192,11 @@ export default function Navbar({ onMenu }) {
               <div className="py-2">
                 <button className="w-full flex items-center gap-3 px-6 py-3 text-sm hover:bg-gray-100 dark:hover:bg-neutral-800 transition">
                   <User size={16} />
-                  My Profile
+                  {t("nav.profile")}
                 </button>
                 <button className="w-full flex items-center gap-3 px-6 py-3 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition">
                   <LogOut size={16} />
-                  Logout
+                  {t("nav.logout")}
                 </button>
               </div>
             </div>

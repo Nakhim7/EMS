@@ -1,0 +1,15 @@
+{
+  "app": {
+    "title": "EMS Admin",
+    "subtitle": "Energy Management System"
+  },
+  "nav": {
+    "english": "English",
+    "khmer": "Khmer",
+    "profile": "My Profile",
+    "logout": "Logout"
+  },
+  "user": {
+    "role": "System Administrator"
+  }
+}
