@@ -11,5 +11,14 @@
   },
   "user": {
     "role": "System Administrator"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "managers": "Managers",
+    "residents": "Residents",
+    "meters": "Meters",
+    "reports": "Reports",
+    "payments": "Payment List",
+    "settings": "Settings"
   }
 }

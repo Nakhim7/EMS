@@ -10,6 +10,7 @@ import MetersPage from "./pages/Admin/Meters/MetersPage";
 import ReportsPage from "./pages/Admin/ReportsPage";
 import PaymentsPage from "./pages/Admin/PaymentsPage";
 import SettingsPage from "./pages/Admin/SettingsPage";
+import AttendancePage from "./pages/Admin/AttendancePage";
 
 /* Placeholder pages (create later) */
 const ManagerDashboard = () => (
@@ -35,7 +36,7 @@ export default function App() {
 
       {/* ================= Manager ================= */}
       <Route path="/manager" element={<ManagerDashboard />} />
-
+      <Route path="/admin/attendance" element={<AttendancePage />} />
       {/* ================= Resident ================= */}
       <Route path="/admin/residents" element={<ResidentsPage />} />
       <Route path="/admin/residents/:id" element={<ResidentDetail />} />

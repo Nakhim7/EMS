@@ -8,84 +8,88 @@ import {
   Settings,
   FileText,
   X,
+  ClipboardCheck, // Added for Attendance
 } from "lucide-react";
-
-// Menu items with accent colors
-export const menus = [
-  {
-    name: "Dashboard",
-    path: "/admin",
-    icon: LayoutDashboard,
-    accent: "blue",
-    color: "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400",
-    active:
-      "bg-blue-500/15 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300 shadow-sm",
-  },
-  {
-    name: "Managers",
-    path: "/admin/managers",
-    icon: UserCog,
-    accent: "indigo",
-    color:
-      "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400",
-    active:
-      "bg-indigo-500/15 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 shadow-sm",
-  },
-  {
-    name: "Residents",
-    path: "/admin/residents",
-    icon: Users,
-    accent: "emerald",
-    color:
-      "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400",
-    active:
-      "bg-emerald-500/15 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300 shadow-sm",
-  },
-  {
-    name: "Meters",
-    path: "/admin/meters",
-    icon: Zap,
-    accent: "orange",
-    color:
-      "bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400",
-    active:
-      "bg-orange-500/15 text-orange-700 dark:bg-orange-900/60 dark:text-orange-300 shadow-sm",
-  },
-  {
-    name: "Reports",
-    path: "/admin/reports",
-    icon: BarChart3,
-    accent: "purple",
-    color:
-      "bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400",
-    active:
-      "bg-purple-500/15 text-purple-700 dark:bg-purple-900/60 dark:text-purple-300 shadow-sm",
-  },
-
-  // ✅ CHANGED: Invoices ➜ Payment List
-  {
-    name: "Payment List",
-    path: "/admin/payments",
-    icon: FileText,
-    accent: "green",
-    color:
-      "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400",
-    active:
-      "bg-green-500/15 text-green-700 dark:bg-green-900/60 dark:text-green-300 shadow-sm",
-  },
-
-  {
-    name: "Settings",
-    path: "/admin/settings",
-    icon: Settings,
-    accent: "gray",
-    color: "bg-gray-100 text-gray-600 dark:bg-neutral-800 dark:text-gray-400",
-    active:
-      "bg-gray-500/15 text-gray-700 dark:bg-neutral-700/60 dark:text-gray-300 shadow-sm",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function Sidebar({ open, setOpen }) {
+  const { t } = useTranslation();
+
+  const menus = [
+    {
+      key: "dashboard",
+      path: "/admin",
+      icon: LayoutDashboard,
+      color: "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400",
+      active:
+        "bg-blue-500/15 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300 shadow-sm",
+    },
+    {
+      key: "managers",
+      path: "/admin/managers",
+      icon: UserCog,
+      color:
+        "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400",
+      active:
+        "bg-indigo-500/15 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 shadow-sm",
+    },
+    {
+      key: "residents",
+      path: "/admin/residents",
+      icon: Users,
+      color:
+        "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400",
+      active:
+        "bg-emerald-500/15 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300 shadow-sm",
+    },
+
+    /* ✅ ATTENDANCE (FIXED) */
+    {
+      key: "attendance",
+      path: "/admin/attendance",
+      icon: ClipboardCheck,
+      color: "bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-400",
+      active:
+        "bg-rose-500/15 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300 shadow-sm",
+    },
+
+    {
+      key: "meters",
+      path: "/admin/meters",
+      icon: Zap,
+      color:
+        "bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400",
+      active:
+        "bg-orange-500/15 text-orange-700 dark:bg-orange-900/60 dark:text-orange-300 shadow-sm",
+    },
+    {
+      key: "reports",
+      path: "/admin/reports",
+      icon: BarChart3,
+      color:
+        "bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400",
+      active:
+        "bg-purple-500/15 text-purple-700 dark:bg-purple-900/60 dark:text-purple-300 shadow-sm",
+    },
+    {
+      key: "payments",
+      path: "/admin/payments",
+      icon: FileText,
+      color:
+        "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400",
+      active:
+        "bg-green-500/15 text-green-700 dark:bg-green-900/60 dark:text-green-300 shadow-sm",
+    },
+    {
+      key: "settings",
+      path: "/admin/settings",
+      icon: Settings,
+      color: "bg-gray-100 text-gray-600 dark:bg-neutral-800 dark:text-gray-400",
+      active:
+        "bg-gray-500/15 text-gray-700 dark:bg-neutral-700/60 dark:text-gray-300 shadow-sm",
+    },
+  ];
+
   return (
     <>
       {/* Mobile overlay */}
@@ -103,21 +107,21 @@ export default function Sidebar({ open, setOpen }) {
           bg-white dark:bg-neutral-950
           border-r border-gray-100 dark:border-neutral-800
           flex flex-col
-          transition-transform duration-300 ease-in-out
+          transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
       >
         {/* Brand / Logo */}
-        <div className="h-24 px-8 flex items-center gap-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
+        <div className="h-24 px-8 flex items-center gap-4 border-b border-gray-100 dark:border-neutral-800">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 text-white flex items-center justify-center font-bold shadow-md">
             ⚡
           </div>
           <div>
             <h1 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
-              EMS Admin
+              {t("app.title")}
             </h1>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Energy Management System
+              {t("app.subtitle")}
             </p>
           </div>
           <button
@@ -132,7 +136,7 @@ export default function Sidebar({ open, setOpen }) {
         <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1.5">
           {menus.map((item) => (
             <NavLink
-              key={item.name}
+              key={item.key}
               to={item.path}
               end
               className={({ isActive }) =>
@@ -144,15 +148,13 @@ export default function Sidebar({ open, setOpen }) {
                 }`
               }
             >
-              {/* Icon */}
               <div
                 className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105
                   ${item.color}`}
               >
                 <item.icon size={22} />
               </div>
-
-              <span>{item.name}</span>
+              <span>{t(`menu.${item.key}`)}</span>
             </NavLink>
           ))}
         </nav>
